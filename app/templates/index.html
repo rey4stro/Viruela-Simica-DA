@@ -1,74 +1,91 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formulario de Datos</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f9f9f9;
-      }
-      form {
-        max-width: 500px;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        background: #fff;
-        border-radius: 8px;
-      }
-      label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-      }
-      input[type="text"],
-      input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      button {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-      button:hover {
-        background-color: #218838;
-      }
-    </style>
+    <title>Formulario de Calidad de Frutas</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+    <!-- Incluye jQuery -->
   </head>
   <body>
-    <h1>Formulario de Datos de Frutas</h1>
-    <form action="/submit" method="POST">
-      <label for="size">Size</label>
-      <input type="number" id="size" name="size" required />
+    <h1>Formulario de Calidad de Frutas</h1>
 
-      <label for="weight">Weight</label>
-      <input type="number" id="weight" name="weight" required />
+    <!-- Formulario -->
+    <form id="dataForm">
+      <label for="size">Tamaño:</label>
+      <input type="number" id="size" name="size" required /><br /><br />
 
-      <label for="sweetness">Sweetness</label>
-      <input type="number" id="sweetness" name="sweetness" required />
+      <label for="weight">Peso:</label>
+      <input type="number" id="weight" name="weight" required /><br /><br />
 
-      <label for="softness">Softness</label>
-      <input type="number" id="softness" name="softness" required />
+      <label for="sweetness">Dulzura:</label>
+      <input
+        type="number"
+        id="sweetness"
+        name="sweetness"
+        required
+      /><br /><br />
 
-      <label for="harvest_time">Harvest Time (days)</label>
-      <input type="number" id="harvest_time" name="harvest_time" required />
+      <label for="softness">Suavidad:</label>
+      <input type="number" id="softness" name="softness" required /><br /><br />
 
-      <label for="ripeness">Ripeness</label>
-      <input type="number" id="ripeness" name="ripeness" required />
+      <label for="harvest_time">Tiempo de Cosecha:</label>
+      <input
+        type="number"
+        id="harvest_time"
+        name="harvest_time"
+        required
+      /><br /><br />
 
-      <label for="acidity">Acidity (pH)</label>
-      <input type="number" step="0.01" id="acidity" name="acidity" required />
+      <label for="ripeness">Madurez:</label>
+      <input type="number" id="ripeness" name="ripeness" required /><br /><br />
 
-      <button type="submit">Enviar Datos</button>
+      <label for="acidity">Acidez:</label>
+      <input type="number" id="acidity" name="acidity" required /><br /><br />
+
+      <button type="submit">Enviar</button>
     </form>
+
+    <!-- Div donde se mostrará el resultado -->
+    <div id="result" style="margin-top: 20px"></div>
+
+    <script>
+      // Script para enviar los datos y actualizar el div con el resultado
+      $("#dataForm").submit(function (event) {
+        event.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+
+        // Obtener los datos del formulario
+        var formData = {
+          size: $("#size").val(),
+          weight: $("#weight").val(),
+          sweetness: $("#sweetness").val(),
+          softness: $("#softness").val(),
+          harvest_time: $("#harvest_time").val(),
+          ripeness: $("#ripeness").val(),
+          acidity: $("#acidity").val(),
+        };
+
+        // Enviar los datos al servidor con AJAX
+        $.ajax({
+          type: "POST",
+          url: "/submit", // La URL a la que se enviarán los datos
+          data: formData,
+          success: function (response) {
+            // Mostrar el resultado recibido en el div
+            $("#result").html(
+              "<h3>Resultado:</h3><p>" + response.result + "</p>"
+            );
+          },
+          error: function () {
+            $("#result").html("<p>Error al procesar los datos.</p>");
+          },
+        });
+      });
+    </script>
   </body>
 </html>

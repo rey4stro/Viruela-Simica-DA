@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, jsonify
 from tensorflow.keras.models import load_model
 import os
 from sklearn.preprocessing import StandardScaler
@@ -37,7 +37,7 @@ def predecir_calidad(Size, Weight, Sweetness, Softness, HarvestTime, Ripeness, A
         return "La calidad de la fruta es mala"
 
 
-
+    
 
 
 
@@ -63,7 +63,10 @@ def guardar():
     Size=size, Weight=weight, Sweetness=sweetness,
     Softness=softness, HarvestTime=harvest_time, Ripeness=ripeness, Acidity=acidity)
 
-    
+    result = resultado
 
-    return f"Resultado: {resultado}"
+    # Devolver el resultado como una respuesta JSON
+    return jsonify({'result': result})
+
+
 
