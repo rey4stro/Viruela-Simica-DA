@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Datos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background-color: #f9f9f9;
+      }
+      form {
+        max-width: 500px;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background: #fff;
+        border-radius: 8px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Formulario de Datos de Frutas</h1>
+    <form action="/submit" method="POST">
+      <label for="size">Size</label>
+      <input type="number" id="size" name="size" required />
+
+      <label for="weight">Weight</label>
+      <input type="number" id="weight" name="weight" required />
+
+      <label for="sweetness">Sweetness</label>
+      <input type="number" id="sweetness" name="sweetness" required />
+
+      <label for="softness">Softness</label>
+      <input type="number" id="softness" name="softness" required />
+
+      <label for="harvest_time">Harvest Time (days)</label>
+      <input type="number" id="harvest_time" name="harvest_time" required />
+
+      <label for="ripeness">Ripeness</label>
+      <input type="number" id="ripeness" name="ripeness" required />
+
+      <label for="acidity">Acidity (pH)</label>
+      <input type="number" step="0.01" id="acidity" name="acidity" required />
+
+      <button type="submit">Enviar Datos</button>
+    </form>
+  </body>
+</html>
