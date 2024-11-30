@@ -1,0 +1,7 @@
+{
+    "runtime": "PYTHON",
+    "appLocation": "./",
+    "apiLocation": "./",
+    "buildOutputDirectory": "./dist",
+    "sourceDirectory": "./"
+}
