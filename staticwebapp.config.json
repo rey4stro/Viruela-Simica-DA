@@ -1,6 +1,6 @@
 {
     "runtime": "PYTHON",
-    "appLocation": "./",
+    "appLocation": "./app",
     "apiLocation": "./",
     "buildOutputDirectory": "./dist",
     "sourceDirectory": "./"
