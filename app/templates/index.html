@@ -18,41 +18,100 @@
     <!-- Formulario -->
     <form id="dataForm">
       <label for="size">Tamaño:</label>
-      <input type="number" id="size" name="size" required /><br /><br />
+      <input
+        type="number"
+        id="size"
+        name="size"
+        min="-2"
+        max="2"
+        step="0.01"
+        required
+      />
+      <br />
 
       <label for="weight">Peso:</label>
-      <input type="number" id="weight" name="weight" required /><br /><br />
+      <input
+        type="number"
+        id="weight"
+        name="weight"
+        min="-2"
+        max="2"
+        step="0.01"
+        required
+      />
+      <br />
 
       <label for="sweetness">Dulzura:</label>
       <input
         type="number"
         id="sweetness"
         name="sweetness"
+        min="-2"
+        max="2"
+        step="0.01"
         required
-      /><br /><br />
+      />
+      <br />
 
       <label for="softness">Suavidad:</label>
-      <input type="number" id="softness" name="softness" required /><br /><br />
+      <input
+        type="number"
+        id="softness"
+        name="softness"
+        min="-2"
+        max="2"
+        step="0.01"
+        required
+      />
+      <br />
 
       <label for="harvest_time">Tiempo de Cosecha:</label>
       <input
         type="number"
         id="harvest_time"
         name="harvest_time"
+        min="-2"
+        max="2"
+        step="0.01"
         required
-      /><br /><br />
+      />
+      <br />
 
       <label for="ripeness">Madurez:</label>
-      <input type="number" id="ripeness" name="ripeness" required /><br /><br />
+      <input
+        type="number"
+        id="ripeness"
+        name="ripeness"
+        min="-2"
+        max="2"
+        step="0.01"
+        required
+      />
+      <br />
 
       <label for="acidity">Acidez:</label>
-      <input type="number" id="acidity" name="acidity" required /><br /><br />
+      <input
+        type="number"
+        id="acidity"
+        name="acidity"
+        min="-2"
+        max="2"
+        step="0.01"
+        required
+      />
+      <br />
 
       <button type="submit">Enviar</button>
     </form>
 
     <!-- Div donde se mostrará el resultado -->
+    <img
+      id="qualityImage"
+      src="{{ url_for('static', filename='default.png') }}"
+      alt="Calidad de la fruta"
+    />
     <div id="result" style="margin-top: 20px"></div>
+    <div id="prediction" style="margin-top: 10px"></div>
 
     <script>
       // Script para enviar los datos y actualizar el div con el resultado
@@ -80,9 +139,21 @@
             $("#result").html(
               "<h3>Resultado:</h3><p>" + response.result + "</p>"
             );
+            $("#prediction").html(
+              "<h3>Predicción (probabilidad):</h3><p>" +
+                response.prediction.toFixed(2) + // Limitar a 2 decimales
+                "</p>"
+            );
+            $("#qualityImage").attr("src", response.imagen);
+            console.log($("#qualityImage"));
           },
           error: function () {
             $("#result").html("<p>Error al procesar los datos.</p>");
+            $("#prediction").html("");
+            $("#qualityImage").attr(
+              "src",
+              "{{ url_for('static', filename='images/error.png') }}"
+            );
           },
         });
       });

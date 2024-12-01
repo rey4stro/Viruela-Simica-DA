@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, url_for
 from tensorflow.keras.models import load_model
 import os
 from sklearn.preprocessing import StandardScaler
@@ -17,8 +17,23 @@ print("Modelo cargado correctamente.")
 
 main = Blueprint('main', __name__)
 
-def predecir_calidad(Size, Weight, Sweetness, Softness, HarvestTime, Ripeness, Acidity):
-    # Cargar el scaler ajustado
+@main.route('/')
+def index():
+    return render_template('index.html')
+
+
+@main.route('/submit', methods=['POST'])
+def guardar():
+
+    Size = request.form.get('size')
+    Weight = request.form.get('weight')
+    Sweetness = request.form.get('sweetness')
+    Softness = request.form.get('softness')
+    HarvestTime = request.form.get('harvest_time')
+    Ripeness = request.form.get('ripeness')
+    Acidity = request.form.get('acidity')
+
+   
     scaler = joblib.load(skalater_path)
 
     # Crear el array de entrada
@@ -30,43 +45,20 @@ def predecir_calidad(Size, Weight, Sweetness, Softness, HarvestTime, Ripeness, A
     # Realizar la predicción con el modelo entrenado
     prediccion = loaded_model.predict(entrada_normalizada)
 
-    # Interpretar la predicción
-    if prediccion[0] >= 0.5:
-        return "La calidad de la fruta es buena"
-    else:
-        return "La calidad de la fruta es mala"
-
+    probabilidad = float(prediccion[0][0])
+    resultado = ""
 
     
+    if prediccion[0] >= 0.5:
+        resultado = "La calidad de la fruta es buena"
+        imagen = url_for('static', filename='buena.png')  # Ruta de imagen buena
+    else:
+        resultado = "La calidad de la fruta es mala"
+        imagen = url_for('static', filename='mala.png')  # Ruta de imagen buena
 
-
-
-
-
-@main.route('/')
-def index():
-    return render_template('index.html')
-
-
-@main.route('/submit', methods=['POST'])
-def guardar():
-
-    size = request.form.get('size')
-    weight = request.form.get('weight')
-    sweetness = request.form.get('sweetness')
-    softness = request.form.get('softness')
-    harvest_time = request.form.get('harvest_time')
-    ripeness = request.form.get('ripeness')
-    acidity = request.form.get('acidity')
-
-    resultado = predecir_calidad(
-    Size=size, Weight=weight, Sweetness=sweetness,
-    Softness=softness, HarvestTime=harvest_time, Ripeness=ripeness, Acidity=acidity)
-
-    result = resultado
 
     # Devolver el resultado como una respuesta JSON
-    return jsonify({'result': result})
+    return jsonify({'prediction': probabilidad, 'result': resultado, 'imagen': imagen})
 
 
 

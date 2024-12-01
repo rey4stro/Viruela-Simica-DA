@@ -1,10 +1,12 @@
 :root {
-    --Background-1: #14110f;
-    --Background-2: #34312d;
+    --Background-1: #f5f4f1;
+    --Background-2: #b6ccd8;
     --Complemento-1: #7e7f83;
     --Complemento-2: yellow;
-    --Texto-1: #f3f3f4;
-    --Texto-2: #d9c5b2;
-    --Boton-1: green;
+    --Texto-1: #313d44;
+    --Texto-2: #00668c;
+    --Boton-1: #71c4ef;
     --Boton-1-Texto: white;
+    --Boton-2: white;
+    --Boton-2-Texto: #71c4ef;
 }
